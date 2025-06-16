@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
 
 // Define a type for the slice state
 type Contact = {
@@ -40,6 +39,9 @@ export const contactsSlice = createSlice({
         (contact) => contact.id !== action.payload
       );
     },
+    createContact: (state, action) => {
+      state.contacts.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     // builder.addCase(fetchUserById.pending, (state, action) => {
@@ -49,9 +51,6 @@ export const contactsSlice = createSlice({
   },
 });
 
-export const { deleteContact } = contactsSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-export const selectContacts = (state: RootState) => state.contacts.contacts;
+export const { deleteContact, createContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

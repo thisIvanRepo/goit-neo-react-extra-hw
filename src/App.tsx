@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "./components/Layout/Layout";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
-const TasksPages = lazy(() => import("./pages/TasksPages/TasksPages"));
+const TasksPages = lazy(() => import("./pages/TasksPages/ContactsPages"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 
 function App() {
