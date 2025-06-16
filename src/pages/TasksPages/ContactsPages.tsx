@@ -5,10 +5,16 @@ import { selectorFilters } from "../../redux/filters/selectors";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeFilters } from "../../redux/filters/slice";
 import CreateFormContact from "../../components/CreateFormContact/CreateFormContact";
+import { useMemo } from "react";
 
 export default function ContactsPages() {
   const contacts = useAppSelector(selectContacts);
   const filters = useAppSelector(selectorFilters);
+  const filterContacts = useMemo(() => {
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filters.trim().toLocaleLowerCase())
+    );
+  }, [filters, contacts]);
 
   const dispatch = useAppDispatch();
 
@@ -18,7 +24,6 @@ export default function ContactsPages() {
 
   const handleChangeFilters = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeFilters(event.target.value));
-    console.log(filters);
   };
 
   return (
@@ -34,7 +39,7 @@ export default function ContactsPages() {
           />
         </label>
       )}
-      {contacts.map((contact) => {
+      {filterContacts.map((contact) => {
         return (
           <div key={contact.id}>
             <span>{contact.name}</span>

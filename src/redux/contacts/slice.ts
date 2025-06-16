@@ -17,11 +17,6 @@ const mockedContacts = [
     name: "Ivan",
     number: "12-12-12",
   },
-  {
-    id: "2",
-    name: "Valera",
-    number: "13-13-13",
-  },
 ];
 
 // Define the initial state using that type
