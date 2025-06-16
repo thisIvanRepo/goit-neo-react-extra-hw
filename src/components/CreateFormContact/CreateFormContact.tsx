@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createContact } from "../../redux/contacts/slice";
-import { nanoid } from "nanoid";
 import { selectContacts } from "../../redux/contacts/selectors";
 import * as yup from "yup";
 
@@ -33,7 +32,7 @@ export default function CreateFormContact() {
     dispatch(
       createContact({
         ...values,
-        id: nanoid(),
+        id: crypto.randomUUID(),
       })
     );
     action.resetForm();
@@ -60,7 +59,7 @@ export default function CreateFormContact() {
           />
           <ErrorMessage name="number" />
 
-          <button type="submit">Submit</button>
+          <button type="submit">Create</button>
         </Form>
       </Formik>
     </div>
