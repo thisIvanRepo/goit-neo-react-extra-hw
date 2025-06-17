@@ -5,7 +5,7 @@ const fetchLogin = (email: string, password: string) => {
   return publicApi.post("/users/login", {
     email,
     password,
-  }) as Promise<{ user: User; token: string }>;
+  }) as Promise<{ data: { user: User; token: string } }>;
 };
 
 export const AuthApi = { fetchLogin };

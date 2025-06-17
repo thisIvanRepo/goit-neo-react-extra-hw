@@ -5,6 +5,7 @@ const fetchLogIn = createAsyncThunk(
   "auth/fetchLogIn",
   async ({ email, password }: { email: string; password: string }) => {
     const response = await AuthApi.fetchLogin(email, password);
+
     return response.data;
   }
 );
