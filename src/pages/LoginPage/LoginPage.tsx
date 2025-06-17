@@ -21,6 +21,8 @@ export default function LoginPage() {
       initialValues={initialState}
       validationSchema={validationSchema}
       onSubmit={(values, action) => {
+        action.resetForm();
+
         const { email, password } = values;
         dispatch(authActions.fetchLogIn({ email, password }));
       }}
