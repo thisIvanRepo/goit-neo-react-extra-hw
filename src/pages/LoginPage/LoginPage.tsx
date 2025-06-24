@@ -12,7 +12,7 @@ const initialState = {
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter a valid email").required(),
-  password: yup.string().min(5).max(25).required(),
+  password: yup.string().min(5).max(35).required(),
 });
 
 export default function LoginPage() {

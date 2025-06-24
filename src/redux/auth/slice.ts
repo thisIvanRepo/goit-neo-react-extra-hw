@@ -13,9 +13,11 @@ interface AuthState {
   error: string;
 }
 
+const token = localStorage.getItem("token");
+
 const initialState: AuthState = {
   user: null,
-  isLoggedIn: false,
+  isLoggedIn: !!token,
   loading: false,
   error: "",
 };
@@ -29,14 +31,23 @@ const authSlice = createSlice({
       .addCase(authActions.fetchLogIn.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        authActions.fetchLogIn.fulfilled,
-        (state, action) => {
-          state.user = action.payload.user;
-          state.loading = false;
-        }
-      )
+      .addCase(authActions.fetchLogIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.loading = false;
+        state.isLoggedIn = true;
+      })
       .addCase(authActions.fetchLogIn.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(authActions.fetchCurrentUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authActions.fetchCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(authActions.fetchCurrentUser.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       });

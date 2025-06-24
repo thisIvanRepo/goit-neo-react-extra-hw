@@ -1,4 +1,5 @@
 import type { User } from "../redux/auth/slice";
+import privateApi from "./privateApi";
 import publicApi from "./publicApi";
 
 const fetchLogin = (email: string, password: string) => {
@@ -8,4 +9,8 @@ const fetchLogin = (email: string, password: string) => {
   }) as Promise<{ data: { user: User; token: string } }>;
 };
 
-export const AuthApi = { fetchLogin };
+const fetchCurrentUser = () => {
+  return privateApi.get("/users/current") as Promise<{ data: User }>;
+};
+
+export const AuthApi = { fetchLogin, fetchCurrentUser };

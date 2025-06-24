@@ -15,7 +15,7 @@ const fetchLogIn = createAsyncThunk<
     const response = await AuthApi.fetchLogin(email, password);
 
     localStorage.setItem("token", response.data.token);
-    
+
     return response.data;
   } catch (error) {
     const err = error as ApiError;
@@ -24,4 +24,19 @@ const fetchLogIn = createAsyncThunk<
   }
 });
 
-export const authActions = { fetchLogIn };
+const fetchCurrentUser = createAsyncThunk(
+  "auth/fetchCurrentUser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await AuthApi.fetchCurrentUser();
+
+      return response.data;
+    } catch (err) {
+      const error = err as ApiError;
+
+      return thunkAPI.rejectWithValue(error.message || "somthing when wrong");
+    }
+  }
+);
+
+export const authActions = { fetchLogIn, fetchCurrentUser };
