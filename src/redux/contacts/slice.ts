@@ -1,27 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { contactsActions } from "./operations";
 
 // Define a type for the slice state
-type Contact = {
-  id: string;
+export interface Contact {
+  id?: string;
   name: string;
   number: string;
-};
+}
 
 interface ContactsState {
   contacts: Contact[];
+  isLoadingContacts: boolean;
+  isLoadingCreatingContact: boolean;
+  error: string;
 }
-
-const mockedContacts = [
-  {
-    id: "1",
-    name: "Ivan",
-    number: "12-12-12",
-  },
-];
 
 // Define the initial state using that type
 const initialState: ContactsState = {
-  contacts: mockedContacts,
+  contacts: [] as Contact[],
+  isLoadingContacts: false,
+  isLoadingCreatingContact: false,
+  error: "",
 };
 
 export const contactsSlice = createSlice({
@@ -34,18 +33,37 @@ export const contactsSlice = createSlice({
         (contact) => contact.id !== action.payload
       );
     },
-    createContact: (state, action) => {
-      state.contacts.push(action.payload);
-    },
   },
   extraReducers: (builder) => {
-    // builder.addCase(fetchUserById.pending, (state, action) => {
-    //   // both `state` and `action` are now correctly typed
-    //   // based on the slice state and the `pending` action creator
-    // });
+    builder
+      .addCase(contactsActions.fetchCreateContact.pending, (state) => {
+        state.isLoadingCreatingContact = true;
+      })
+      .addCase(
+        contactsActions.fetchCreateContact.fulfilled,
+        (state, action) => {
+          state.isLoadingCreatingContact = false;
+          state.contacts.push(action.payload);
+        }
+      )
+      .addCase(contactsActions.fetchCreateContact.rejected, (state, action) => {
+        state.isLoadingCreatingContact = false;
+        state.error = action.payload as string;
+      })
+      .addCase(contactsActions.fetchContacts.pending, (state) => {
+        state.isLoadingContacts = true;
+      })
+      .addCase(contactsActions.fetchContacts.fulfilled, (state, action) => {
+        state.isLoadingContacts = false;
+        state.contacts = action.payload;
+      })
+      .addCase(contactsActions.fetchContacts.rejected, (state, action) => {
+        state.isLoadingContacts = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
-export const { deleteContact, createContact } = contactsSlice.actions;
+export const { deleteContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

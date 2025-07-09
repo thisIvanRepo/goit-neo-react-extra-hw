@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthApi } from "../../api/AuthApi";
 import type { User } from "./slice";
 
-type ApiError = {
+export type ApiError = {
   message: string;
 };
 

@@ -5,18 +5,31 @@ import { selectorFilters } from "../../redux/filters/selectors";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeFilters } from "../../redux/filters/slice";
 import CreateFormContact from "../../components/CreateFormContact/CreateFormContact";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { contactsActions } from "@/redux/contacts/operations";
 
 export default function ContactsPages() {
   const contacts = useAppSelector(selectContacts);
   const filters = useAppSelector(selectorFilters);
+
   const filterContacts = useMemo(() => {
     return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filters.trim().toLocaleLowerCase())
+      contact.name.toLowerCase().includes(filters.trim().toLowerCase())
     );
   }, [filters, contacts]);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(contactsActions.fetchContacts())
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [dispatch]);
 
   const handleDeleteContact = (id: string) => {
     dispatch(deleteContact(id));

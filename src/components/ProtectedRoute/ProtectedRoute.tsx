@@ -8,7 +8,6 @@ type Props = {
 
 export default function ProtectedRout({ children }: Props) {
   const isLoggetIn = useAppSelector(selectIsLoggedIn);
-  console.log(isLoggetIn);
 
   if (!isLoggetIn) {
     return <Navigate to="/login" />;

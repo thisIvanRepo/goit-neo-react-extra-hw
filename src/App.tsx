@@ -4,9 +4,6 @@ import { Route, Routes } from "react-router";
 import Layout from "./components/Layout/Layout";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
-// const ProtectedRoute = lazy(
-//   () => import("./components/ProtectedRoute/ProtectedRoute")
-// );
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const TasksPages = lazy(() => import("./pages/TasksPages/ContactsPages"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));

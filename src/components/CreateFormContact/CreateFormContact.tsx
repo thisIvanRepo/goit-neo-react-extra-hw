@@ -1,16 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { createContact } from "../../redux/contacts/slice";
+
 import { selectContacts } from "../../redux/contacts/selectors";
 import * as yup from "yup";
+import { contactsActions } from "@/redux/contacts/operations";
+import type { Contact } from "@/redux/contacts/slice";
 
-interface FormContact {
-  id: string;
-  name: string;
-  number: string;
-}
-
-const initialValue: FormContact = {
+const initialValue: Contact = {
   id: "",
   name: "",
   number: "",
@@ -26,13 +22,12 @@ export default function CreateFormContact() {
   const dispatch = useAppDispatch();
 
   const handlerSubbmit = (
-    values: FormContact,
-    action: FormikHelpers<FormContact>
+    values: Contact,
+    action: FormikHelpers<Contact>
   ) => {
     dispatch(
-      createContact({
+      contactsActions.fetchCreateContact({
         ...values,
-        id: crypto.randomUUID(),
       })
     );
     action.resetForm();
