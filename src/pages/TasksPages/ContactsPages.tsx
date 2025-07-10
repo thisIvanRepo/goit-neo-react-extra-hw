@@ -55,7 +55,10 @@ export default function ContactsPages() {
       {filterContacts.map((contact) => {
         return (
           <div key={contact.id}>
-            <span>{contact.name}</span>
+            <span>
+              {contact.name}
+              <br />
+            </span>
             <button onClick={() => handleDeleteContact(contact)}>
               delete contact
             </button>
