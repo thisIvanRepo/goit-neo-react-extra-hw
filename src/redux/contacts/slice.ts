@@ -12,6 +12,7 @@ interface ContactsState {
   contacts: Contact[];
   isLoadingContacts: boolean;
   isLoadingCreatingContact: boolean;
+  isLoadingDeleteContact: boolean;
   error: string;
 }
 
@@ -20,6 +21,7 @@ const initialState: ContactsState = {
   contacts: [] as Contact[],
   isLoadingContacts: false,
   isLoadingCreatingContact: false,
+  isLoadingDeleteContact: false,
   error: "",
 };
 
@@ -27,13 +29,7 @@ export const contactsSlice = createSlice({
   name: "contacts",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {
-    deleteContact: (state, action) => {
-      state.contacts = state.contacts.filter(
-        (contact) => contact.id !== action.payload
-      );
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(contactsActions.fetchCreateContact.pending, (state) => {
@@ -60,10 +56,24 @@ export const contactsSlice = createSlice({
       .addCase(contactsActions.fetchContacts.rejected, (state, action) => {
         state.isLoadingContacts = false;
         state.error = action.payload as string;
+      })
+      .addCase(contactsActions.fetchDeleteContact.pending, (state) => {
+        state.isLoadingDeleteContact = true;
+      })
+      .addCase(
+        contactsActions.fetchDeleteContact.fulfilled,
+        (state, action) => {
+          state.contacts = state.contacts.filter((contact) => {
+            return contact.id !== action.payload.id;
+          });
+          state.isLoadingDeleteContact = false;
+        }
+      )
+      .addCase(contactsActions.fetchDeleteContact.rejected, (state, action) => {
+        state.isLoadingDeleteContact = false;
+        state.error = action.payload as string;
       });
   },
 });
-
-export const { deleteContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

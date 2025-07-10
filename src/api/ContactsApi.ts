@@ -9,4 +9,12 @@ const fetchCreateContact = (contact: Contact) => {
   return privateApi.post("/contacts", contact) as Promise<{ data: Contact }>;
 };
 
-export const ContactsApi = { fetchContacts, fetchCreateContact };
+const fetchDeleteContact = (contact: Contact) => {
+  return privateApi.delete(`/contacts/${contact.id}`);
+};
+
+export const ContactsApi = {
+  fetchContacts,
+  fetchCreateContact,
+  fetchDeleteContact,
+};

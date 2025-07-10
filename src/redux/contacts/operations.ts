@@ -26,8 +26,6 @@ const fetchCreateContact = createAsyncThunk<
   try {
     const response = await ContactsApi.fetchCreateContact(contact);
 
-    console.log(response.data);
-
     return response.data;
   } catch (err) {
     const error = err as ApiError;
@@ -36,4 +34,26 @@ const fetchCreateContact = createAsyncThunk<
   }
 });
 
-export const contactsActions = { fetchContacts, fetchCreateContact };
+const fetchDeleteContact = createAsyncThunk<
+  Contact,
+  Contact,
+  { rejectValue: string }
+>("contacts/fetchDeleteContact", async (contact, thunkAPI) => {
+  try {
+    const response = await ContactsApi.fetchDeleteContact(contact);
+
+    return response.data;
+  } catch (err) {
+    const error = err as ApiError;
+
+    return thunkAPI.rejectWithValue(
+      error.message || "problem with deleting contact"
+    );
+  }
+});
+
+export const contactsActions = {
+  fetchContacts,
+  fetchCreateContact,
+  fetchDeleteContact,
+};
