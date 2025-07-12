@@ -6,7 +6,6 @@ import { changeFilters } from "../../redux/filters/slice";
 import CreateFormContact from "../../components/CreateFormContact/CreateFormContact";
 import { useEffect, useMemo } from "react";
 import { contactsActions } from "@/redux/contacts/operations";
-import type { Contact } from "@/redux/contacts/slice";
 
 export default function ContactsPages() {
   const contacts = useAppSelector(selectContacts);
@@ -34,6 +33,9 @@ export default function ContactsPages() {
   const handleDeleteContact = (id: string) => {
     dispatch(contactsActions.fetchDeleteContact(id));
   };
+
+  const handleUpdateUser = (id: string) => {
+  }
 
   const handleChangeFilters = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeFilters(event.target.value));
@@ -74,6 +76,9 @@ export default function ContactsPages() {
             </span>
             <button onClick={() => handleDeleteContact(contact.id as string)}>
               delete contact
+            </button>
+            <button onClick={() => handleUpdateUser(contact.id as string)}>
+              update user
             </button>
           </div>
         );
