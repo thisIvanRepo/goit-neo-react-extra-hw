@@ -35,14 +35,14 @@ const fetchCreateContact = createAsyncThunk<
 });
 
 const fetchDeleteContact = createAsyncThunk<
-  Contact,
-  Contact,
+  string,
+  string,
   { rejectValue: string }
->("contacts/fetchDeleteContact", async (contact, thunkAPI) => {
+>("contacts/fetchDeleteContact", async (contactId, thunkAPI) => {
   try {
-    const response = await ContactsApi.fetchDeleteContact(contact);
+    await ContactsApi.fetchDeleteContact(contactId);
 
-    return response.data;
+    return contactId;
   } catch (err) {
     const error = err as ApiError;
 

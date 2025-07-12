@@ -64,7 +64,7 @@ export const contactsSlice = createSlice({
         contactsActions.fetchDeleteContact.fulfilled,
         (state, action) => {
           state.contacts = state.contacts.filter((contact) => {
-            return contact.id !== action.payload.id;
+            return contact.id !== action.payload;
           });
           state.isLoadingDeleteContact = false;
         }

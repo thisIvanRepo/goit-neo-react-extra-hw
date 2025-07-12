@@ -9,8 +9,8 @@ const fetchCreateContact = (contact: Contact) => {
   return privateApi.post("/contacts", contact) as Promise<{ data: Contact }>;
 };
 
-const fetchDeleteContact = (contact: Contact) => {
-  return privateApi.delete(`/contacts/${contact.id}`);
+const fetchDeleteContact = (id: string) => {
+  return privateApi.delete(`/contacts/${id}`);
 };
 
 export const ContactsApi = {

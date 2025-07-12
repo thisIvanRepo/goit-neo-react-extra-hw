@@ -31,8 +31,8 @@ export default function ContactsPages() {
       });
   }, [dispatch]);
 
-  const handleDeleteContact = (contact: Contact) => {
-    dispatch(contactsActions.fetchDeleteContact(contact));
+  const handleDeleteContact = (id: string) => {
+    dispatch(contactsActions.fetchDeleteContact(id));
   };
 
   const handleChangeFilters = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +54,25 @@ export default function ContactsPages() {
       )}
       {filterContacts.map((contact) => {
         return (
-          <div key={contact.id}>
+          <div
+            key={contact.id}
+            style={{
+              display: "flex",
+              margin: 10,
+              gap: 10,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <span>
               {contact.name}
               <br />
             </span>
-            <button onClick={() => handleDeleteContact(contact)}>
+            <span>
+              {contact.number}
+              <br />
+            </span>
+            <button onClick={() => handleDeleteContact(contact.id as string)}>
               delete contact
             </button>
           </div>
