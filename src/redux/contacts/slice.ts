@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { contactsActions } from "./operations";
 
 // Define a type for the slice state
@@ -8,8 +8,15 @@ export interface Contact {
   number: string;
 }
 
+export type UpdateContactArgs = {
+  id: string;
+  name: string;
+  number: string;
+};
+
 interface ContactsState {
   contacts: Contact[];
+  updatingContact: null | Contact;
   isLoadingContacts: boolean;
   isLoadingCreatingContact: boolean;
   isLoadingDeleteContact: boolean;
@@ -19,6 +26,7 @@ interface ContactsState {
 // Define the initial state using that type
 const initialState: ContactsState = {
   contacts: [] as Contact[],
+  updatingContact: null,
   isLoadingContacts: false,
   isLoadingCreatingContact: false,
   isLoadingDeleteContact: false,
@@ -29,7 +37,11 @@ export const contactsSlice = createSlice({
   name: "contacts",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    setUpadatingContact(state, action: PayloadAction<UpdateContactArgs>) {
+      state.updatingContact = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(contactsActions.fetchCreateContact.pending, (state) => {
@@ -72,8 +84,20 @@ export const contactsSlice = createSlice({
       .addCase(contactsActions.fetchDeleteContact.rejected, (state, action) => {
         state.isLoadingDeleteContact = false;
         state.error = action.payload as string;
+      })
+      .addCase(contactsActions.fetchUpdateContact.pending, (state) => {
+        state.isLoadingCreatingContact = true;
+      })
+      .addCase(contactsActions.fetchUpdateContact.fulfilled, (state) => {
+        state.updatingContact = null;
+        state.isLoadingCreatingContact = false;
+      })
+      .addCase(contactsActions.fetchUpdateContact.rejected, (state, action) => {
+        state.isLoadingCreatingContact = false;
+        state.error = action.payload as string;
       });
   },
 });
 
+export const { setUpadatingContact } = contactsSlice.actions;
 export default contactsSlice.reducer;

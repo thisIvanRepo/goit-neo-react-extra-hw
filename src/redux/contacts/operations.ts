@@ -1,7 +1,7 @@
 import { ContactsApi } from "@/api/ContactsApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { ApiError } from "../auth/operations";
-import type { Contact } from "./slice";
+import type { Contact, UpdateContactArgs } from "./slice";
 
 const fetchContacts = createAsyncThunk(
   "contacts/fetchContacts",
@@ -52,8 +52,29 @@ const fetchDeleteContact = createAsyncThunk<
   }
 });
 
+const fetchUpdateContact = createAsyncThunk<
+  Contact,
+  UpdateContactArgs,
+  { rejectValue: string }
+>("contacts/fetchUpdateContact", async ({ id, name, number }, thunkAPI) => {
+  try {
+    const response = await ContactsApi.fetchUpdateContact({
+      id,
+      name,
+      number,
+    });
+
+    return response.data;
+  } catch (err) {
+    const error = err as ApiError;
+
+    return thunkAPI.rejectWithValue(error.message || "foling update contact");
+  }
+});
+
 export const contactsActions = {
   fetchContacts,
   fetchCreateContact,
   fetchDeleteContact,
+  fetchUpdateContact,
 };

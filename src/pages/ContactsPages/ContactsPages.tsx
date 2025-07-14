@@ -1,14 +1,22 @@
 import type React from "react";
-import { selectContacts } from "../../redux/contacts/selectors";
+import {
+  selectContacts,
+  selectorUpdateContact,
+} from "../../redux/contacts/selectors";
 import { selectorFilters } from "../../redux/filters/selectors";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeFilters } from "../../redux/filters/slice";
 import CreateFormContact from "../../components/CreateFormContact/CreateFormContact";
 import { useEffect, useMemo } from "react";
 import { contactsActions } from "@/redux/contacts/operations";
+import {
+  setUpadatingContact,
+  type UpdateContactArgs,
+} from "@/redux/contacts/slice";
 
 export default function ContactsPages() {
   const contacts = useAppSelector(selectContacts);
+  const updateContact = useAppSelector(selectorUpdateContact);
   const filters = useAppSelector(selectorFilters);
 
   const filterContacts = useMemo(() => {
@@ -35,7 +43,13 @@ export default function ContactsPages() {
   };
 
   const handleUpdateUser = (id: string) => {
-  }
+    const updatingContact = contacts.find((contact) => contact.id === id);
+    if (updatingContact) {
+      dispatch(setUpadatingContact(updatingContact as UpdateContactArgs));
+    }
+
+    console.log(updateContact);
+  };
 
   const handleChangeFilters = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeFilters(event.target.value));

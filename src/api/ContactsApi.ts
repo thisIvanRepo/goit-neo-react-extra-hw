@@ -13,13 +13,13 @@ const fetchDeleteContact = (id: string) => {
   return privateApi.delete(`/contacts/${id}`);
 };
 
-const fetchUpdateContact = (id: string) => {
-  return privateApi.patch(`/contacts/${id}`);
+const fetchUpdateContact = ({ id, name, number }: Contact) => {
+  return privateApi.patch(`/contacts/${id}`, { name, number });
 };
 
 export const ContactsApi = {
   fetchContacts,
   fetchCreateContact,
   fetchDeleteContact,
-  fetchUpdateContact
+  fetchUpdateContact,
 };
