@@ -38,7 +38,10 @@ export const contactsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setUpadatingContact(state, action: PayloadAction<UpdateContactArgs>) {
+    setUpadatingContact(
+      state,
+      action: PayloadAction<UpdateContactArgs | null>
+    ) {
       state.updatingContact = action.payload;
     },
   },

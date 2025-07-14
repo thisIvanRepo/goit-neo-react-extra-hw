@@ -44,7 +44,9 @@ export default function ContactsPages() {
 
   const handleUpdateUser = (id: string) => {
     const updatingContact = contacts.find((contact) => contact.id === id);
-    if (updatingContact) {
+    if (updateContact?.id === id) {
+      dispatch(setUpadatingContact(null));
+    } else {
       dispatch(setUpadatingContact(updatingContact as UpdateContactArgs));
     }
 
@@ -92,7 +94,7 @@ export default function ContactsPages() {
               delete contact
             </button>
             <button onClick={() => handleUpdateUser(contact.id as string)}>
-              update user
+              {updateContact?.id === contact.id ? "cancel" : "update user"}
             </button>
           </div>
         );

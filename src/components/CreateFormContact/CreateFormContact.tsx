@@ -1,6 +1,9 @@
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectContacts } from "../../redux/contacts/selectors";
+import {
+  selectContacts,
+  selectorUpdateContact,
+} from "../../redux/contacts/selectors";
 import * as yup from "yup";
 import { contactsActions } from "@/redux/contacts/operations";
 import type { Contact } from "@/redux/contacts/slice";
@@ -18,12 +21,10 @@ const validationSchema = yup.object({
 
 export default function CreateFormContact() {
   const contacts = useAppSelector(selectContacts);
+  const updatingContact = useAppSelector(selectorUpdateContact);
   const dispatch = useAppDispatch();
 
-  const handlerSubbmit = (
-    values: Contact,
-    action: FormikHelpers<Contact>
-  ) => {
+  const handlerSubbmit = (values: Contact, action: FormikHelpers<Contact>) => {
     dispatch(
       contactsActions.fetchCreateContact({
         ...values,
@@ -53,7 +54,7 @@ export default function CreateFormContact() {
           />
           <ErrorMessage name="number" />
 
-          <button type="submit">Create</button>
+          <button type="submit">{updatingContact ? "Update" : "Create"}</button>
         </Form>
       </Formik>
     </div>
