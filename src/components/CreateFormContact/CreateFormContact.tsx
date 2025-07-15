@@ -6,7 +6,7 @@ import {
 } from "../../redux/contacts/selectors";
 import * as yup from "yup";
 import { contactsActions } from "@/redux/contacts/operations";
-import type { Contact } from "@/redux/contacts/slice";
+import type { Contact, UpdateContactArgs } from "@/redux/contacts/slice";
 
 const initialValue: Contact = {
   id: "",
@@ -25,11 +25,17 @@ export default function CreateFormContact() {
   const dispatch = useAppDispatch();
 
   const handlerSubbmit = (values: Contact, action: FormikHelpers<Contact>) => {
-    dispatch(
-      contactsActions.fetchCreateContact({
-        ...values,
-      })
-    );
+    if (updatingContact) {
+      console.log(values);
+      dispatch(contactsActions.fetchUpdateContact(values as UpdateContactArgs));
+    } else {
+      dispatch(
+        contactsActions.fetchCreateContact({
+          ...values,
+        })
+      );
+    }
+
     action.resetForm();
     console.log(contacts);
   };
@@ -38,7 +44,8 @@ export default function CreateFormContact() {
     <div>
       <h2>Input new contact information</h2>
       <Formik
-        initialValues={initialValue}
+        initialValues={updatingContact ? updatingContact : initialValue}
+        enableReinitialize={true}
         onSubmit={handlerSubbmit}
         validationSchema={validationSchema}
       >

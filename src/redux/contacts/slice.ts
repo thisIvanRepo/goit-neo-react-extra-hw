@@ -91,10 +91,21 @@ export const contactsSlice = createSlice({
       .addCase(contactsActions.fetchUpdateContact.pending, (state) => {
         state.isLoadingCreatingContact = true;
       })
-      .addCase(contactsActions.fetchUpdateContact.fulfilled, (state) => {
-        state.updatingContact = null;
-        state.isLoadingCreatingContact = false;
-      })
+      .addCase(
+        contactsActions.fetchUpdateContact.fulfilled,
+        (state, action) => {
+          const index = state.contacts.findIndex(
+            (contact) => contact.id === action.payload.id
+          );
+
+          if (index >= 0) {
+            state.contacts[index] = action.payload;
+          }
+
+          state.updatingContact = null;
+          state.isLoadingCreatingContact = false;
+        }
+      )
       .addCase(contactsActions.fetchUpdateContact.rejected, (state, action) => {
         state.isLoadingCreatingContact = false;
         state.error = action.payload as string;
