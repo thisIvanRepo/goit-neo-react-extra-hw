@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const TasksPages = lazy(() => import("./pages/ContactsPages/ContactsPages"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage/SignupPage"));
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route
             path="/"
             element={

@@ -15,19 +15,40 @@ export default function Header() {
     }
   }, [user, isLoggetIn, dispatch]);
 
+  const handleLogout = () => {
+    dispatch(authActions.fetchLogout());
+  };
+
   return (
     <header>
       <nav>
         <ul>
-          <p>{user?.email}</p>
+          {!isLoggetIn && (
+            <li>
+              <NavLink to="/signup">Register</NavLink>
+            </li>
+          )}
+          {!isLoggetIn && (
+            <li>
+              <NavLink to="/login">login</NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
-          <li>
-            <NavLink to="/contacts">Contacts</NavLink>
-          </li>
+          {isLoggetIn && (
+            <li>
+              <NavLink to="/contacts">Contacts</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
+      {isLoggetIn && (
+        <div>
+          <p>{user?.email}</p>
+          <button onClick={handleLogout}>logout</button>
+        </div>
+      )}
     </header>
   );
 }

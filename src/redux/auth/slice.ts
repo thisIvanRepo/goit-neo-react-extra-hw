@@ -40,6 +40,30 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.loading = false;
       })
+      .addCase(authActions.fetchSignup.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authActions.fetchSignup.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.loading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(authActions.fetchSignup.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(authActions.fetchLogout.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authActions.fetchLogout.fulfilled, (state) => {
+        state.user = null;
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(authActions.fetchLogout.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
       .addCase(authActions.fetchCurrentUser.pending, (state) => {
         state.loading = true;
       })

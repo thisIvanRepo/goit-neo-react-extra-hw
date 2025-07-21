@@ -1,9 +1,18 @@
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, type FieldProps } from "formik";
 import { toast, Toaster } from "sonner";
 import * as yup from "yup";
 import { useAppDispatch } from "../../redux/hooks";
 import { authActions } from "../../redux/auth/operations";
 import { useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const initialState = {
   email: "",
@@ -21,35 +30,88 @@ export default function LoginPage() {
 
   return (
     <>
-      <Formik
-        initialValues={initialState}
-        validationSchema={validationSchema}
-        onSubmit={(values, action) => {
-          action.resetForm();
+      <Card>
+        <CardHeader>
+          <CardTitle>Log in</CardTitle>
+        </CardHeader>
+        <Formik
+          initialValues={initialState}
+          validationSchema={validationSchema}
+          onSubmit={(values, action) => {
+            action.resetForm();
 
-          const { email, password } = values;
-          dispatch(authActions.fetchLogIn({ email, password }))
-            .unwrap()
-            .then(() => {
-              navigate("/");
-            })
-            .catch((err) => {
-              toast.error(err);
-            });
-        }}
-      >
-        <Form>
-          <label htmlFor="email">
-            email
-            <Field id="email" type="text" name="email" />
-          </label>
-          <label htmlFor="password">
-            pasword
-            <Field id="password" type="text" name="password" />
-          </label>
-          <button type="submit">log in</button>
-        </Form>
-      </Formik>
+            const { email, password } = values;
+            dispatch(authActions.fetchLogIn({ email, password }))
+              .unwrap()
+              .then(() => {
+                navigate("/");
+              })
+              .catch((err) => {
+                toast.error(err);
+              });
+          }}
+        >
+          <Form>
+            <CardContent>
+              <label htmlFor="email">
+                email
+                <Field id="email" name="email">
+                  {({ field, meta }: FieldProps) => {
+                    return (
+                      <div>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="First Name"
+                        />
+                        {meta.touched && meta.error && (
+                          <div className="error">{meta.error}</div>
+                        )}
+                      </div>
+                    );
+                  }}
+                </Field>
+              </label>
+              <label htmlFor="password">
+                password
+                <Field
+                  id="password"
+                  type="text" //will chenge to "password"
+                  name="password"
+                  placeholder="password"
+                >
+                  {({ field, meta }: FieldProps) => {
+                    return (
+                      <div>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="First Name"
+                        />
+                        {meta.touched && meta.error && (
+                          <div className="error">{meta.error}</div>
+                        )}
+                      </div>
+                    );
+                  }}
+                </Field>
+              </label>
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={() => {
+                  console.log("working");
+                }}
+              >
+                log in
+              </Button>
+            </CardFooter>
+          </Form>
+        </Formik>
+      </Card>
+
       <Toaster />
     </>
   );
