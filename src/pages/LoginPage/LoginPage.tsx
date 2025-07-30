@@ -3,16 +3,18 @@ import { toast, Toaster } from "sonner";
 import * as yup from "yup";
 import { useAppDispatch } from "../../redux/hooks";
 import { authActions } from "../../redux/auth/operations";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Card,
+  CardAction,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const initialState = {
   email: "",
@@ -30,7 +32,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <Card>
+      <Card className="max-w-[500px] mx-auto">
         <CardHeader>
           <CardTitle>Log in</CardTitle>
         </CardHeader>
@@ -52,7 +54,7 @@ export default function LoginPage() {
           }}
         >
           <Form>
-            <CardContent>
+            <CardContent className="mb-5 flex flex-col gap-y-8">
               <label htmlFor="email">
                 email
                 <Field id="email" name="email">
@@ -60,12 +62,17 @@ export default function LoginPage() {
                     return (
                       <div>
                         <Input
-                          type="text"
+                          className="mb-1"
+                          type="email"
                           {...field}
                           placeholder="First Name"
                         />
                         {meta.touched && meta.error && (
-                          <div className="error">{meta.error}</div>
+                          <Alert variant="destructive" className="border-none">
+                            <AlertDescription className="error">
+                              {meta.error}
+                            </AlertDescription>
+                          </Alert>
                         )}
                       </div>
                     );
@@ -76,7 +83,7 @@ export default function LoginPage() {
                 password
                 <Field
                   id="password"
-                  type="text" //will chenge to "password"
+                  type="password"
                   name="password"
                   placeholder="password"
                 >
@@ -84,12 +91,17 @@ export default function LoginPage() {
                     return (
                       <div>
                         <Input
-                          type="text"
+                          className="mb-1"
+                          type="password"
                           {...field}
                           placeholder="First Name"
                         />
                         {meta.touched && meta.error && (
-                          <div className="error">{meta.error}</div>
+                          <Alert variant="destructive" className="border-none">
+                            <AlertDescription className="error">
+                              {meta.error}
+                            </AlertDescription>
+                          </Alert>
                         )}
                       </div>
                     );
@@ -97,13 +109,15 @@ export default function LoginPage() {
                 </Field>
               </label>
             </CardContent>
-            <CardFooter>
+            <CardAction className="w-full flex justify-center mb-3">
+              <Button variant="link" asChild>
+                <Link to={"/signup"}>Sign up</Link>
+              </Button>
+            </CardAction>
+            <CardFooter className="flex justify-center">
               <Button
                 type="submit"
-                className="w-full"
-                onClick={() => {
-                  console.log("working");
-                }}
+                className="min-w-70"
               >
                 log in
               </Button>

@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { useEffect } from "react";
 import { authActions } from "@/redux/auth/operations";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const user = useAppSelector(selectUser);
@@ -20,25 +21,35 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <nav>
-        <ul>
+    <header className="mb-10 border rounded-b-sm w-full">
+      <nav className="flex w-full justify-end items-center h-20">
+        <ul className="flex gap-x-5 mr-10">
           {!isLoggetIn && (
             <li>
-              <NavLink to="/signup">Register</NavLink>
-            </li>
-          )}
-          {!isLoggetIn && (
-            <li>
-              <NavLink to="/login">login</NavLink>
+              <NavLink
+                className="hover:underline hover:decoration-slate-500"
+                to="/login"
+              >
+                Login
+              </NavLink>
             </li>
           )}
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink
+              className="hover:underline hover:decoration-slate-500"
+              to="/"
+            >
+              Home
+            </NavLink>
           </li>
           {isLoggetIn && (
             <li>
-              <NavLink to="/contacts">Contacts</NavLink>
+              <NavLink
+                className="hover:underline hover:decoration-slate-500"
+                to="/contacts"
+              >
+                Contacts
+              </NavLink>
             </li>
           )}
         </ul>
@@ -46,7 +57,7 @@ export default function Header() {
       {isLoggetIn && (
         <div>
           <p>{user?.email}</p>
-          <button onClick={handleLogout}>logout</button>
+          <Button variant="link" onClick={handleLogout}>logout</Button>
         </div>
       )}
     </header>
