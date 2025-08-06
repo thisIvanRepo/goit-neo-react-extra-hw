@@ -65,7 +65,7 @@ export default function LoginPage() {
                           className="mb-1"
                           type="email"
                           {...field}
-                          placeholder="First Name"
+                          placeholder="Enter your email"
                         />
                         {meta.touched && meta.error && (
                           <Alert variant="destructive" className="border-none">
@@ -94,7 +94,7 @@ export default function LoginPage() {
                           className="mb-1"
                           type="password"
                           {...field}
-                          placeholder="First Name"
+                          placeholder="Enter your password"
                         />
                         {meta.touched && meta.error && (
                           <Alert variant="destructive" className="border-none">
