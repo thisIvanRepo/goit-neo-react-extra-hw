@@ -13,6 +13,8 @@ import {
   setUpadatingContact,
   type UpdateContactArgs,
 } from "@/redux/contacts/slice";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function ContactsPages() {
   const contacts = useAppSelector(selectContacts);
@@ -62,43 +64,50 @@ export default function ContactsPages() {
       <CreateFormContact />
       {contacts.length > 0 && (
         <label htmlFor="search">
-          search contacts by name
-          <input
+          <Input
+            className="max-w-110 mx-auto mb-[30px]"
             id="search"
+            placeholder="Search contacts by name"
             value={filters}
             onChange={(e) => handleChangeFilters(e)}
           />
         </label>
       )}
-      {filterContacts.map((contact) => {
-        return (
-          <div
-            key={contact.id}
-            style={{
-              display: "flex",
-              margin: 10,
-              gap: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <span>
-              {contact.name}
-              <br />
-            </span>
-            <span>
-              {contact.number}
-              <br />
-            </span>
-            <button onClick={() => handleDeleteContact(contact.id as string)}>
-              delete contact
-            </button>
-            <button onClick={() => handleUpdateUser(contact.id as string)}>
-              {updateContact?.id === contact.id ? "cancel" : "update user"}
-            </button>
-          </div>
-        );
-      })}
+      <div className="border p-10 rounded-3xl w-fit mx-auto mb-[10px]">
+        {filterContacts.map((contact) => {
+          return (
+            <div
+              className="flex flex-row gap-5 items-center min-w-100 justify-between px-[20px]
+                border rounded-xl bg-linear-to-r from-gray-200 to-gray-100 px-[7px] py-[3px] mb-[10px] mx-0"
+              key={contact.id}
+            >
+              <div className="flex gap-[10px]">
+                <p className="text-gray-600">{contact.name}</p>
+                <p className="text-gray-600">{contact.number}</p>
+              </div>
+              <div>
+                <Button
+                  className="mr-[10px] bg-red-400 text-white hover:bg-red-300 min-w-[80px]"
+                  onClick={() => handleDeleteContact(contact.id as string)}
+                >
+                  delete
+                </Button>
+                <Button
+                  className={`text-white min-w-[80px]
+                     ${
+                       updateContact?.id === contact.id
+                         ? "bg-pink-400 hover:bg-pink-300"
+                         : "bg-blue-400 hover:bg-blue-300"
+                     }`}
+                  onClick={() => handleUpdateUser(contact.id as string)}
+                >
+                  {updateContact?.id === contact.id ? "cancel" : "update"}
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

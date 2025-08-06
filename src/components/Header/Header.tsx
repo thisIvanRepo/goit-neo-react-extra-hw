@@ -21,8 +21,8 @@ export default function Header() {
   };
 
   return (
-    <header className="mb-10 border rounded-b-sm w-full">
-      <nav className="flex w-full justify-end items-center h-20">
+    <header className="flex items-center justify-between flex-row-reverse mb-10 border rounded-b-3xl w-full pl-[35px]">
+      <nav className="flex w-fit justify-end items-center h-20">
         <ul className="flex gap-x-5 mr-10">
           {!isLoggetIn && (
             <li>
@@ -55,9 +55,11 @@ export default function Header() {
         </ul>
       </nav>
       {isLoggetIn && (
-        <div>
+        <div className="w-fit">
           <p>{user?.email}</p>
-          <Button variant="link" onClick={handleLogout}>logout</Button>
+          <Button variant="link" onClick={handleLogout}>
+            logout
+          </Button>
         </div>
       )}
     </header>
