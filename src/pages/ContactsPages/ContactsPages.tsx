@@ -73,7 +73,7 @@ export default function ContactsPages() {
           />
         </label>
       )}
-      <div className="border p-10 rounded-3xl w-fit mx-auto mb-[10px]">
+      <div className="p-10 w-fit mx-auto mb-[10px]">
         {filterContacts.map((contact) => {
           return (
             <div
