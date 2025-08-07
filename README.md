@@ -1,54 +1,89 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# React Extra Homework Project. Contacts app
 
-Currently, two official plugins are available:
+Live: [https://goit-neo-react-extra-hw-peach.vercel.app/](https://goit-neo-react-extra-hw-peach.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is a single-page application (SPA) homework project. It includes user authentication, form handling, routing, and a modern UI powered by Tailwind CSS and Radix UI.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Tech Stack
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **React** (with TypeScript)
+- **Redux Toolkit**
+- **React Router**
+- **Formik + Yup** (form validation)
+- **Axios** (HTTP requests)
+- **Tailwind CSS**
+- **Radix UI + Lucide React** (UI components & icons)
+- **Sonner** (toast notifications)
+- **Vite** (build tool)
+- **Vercel** (deployment)
+
+---
+
+## 🛠️ Installation
+
+> Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/) installed.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/thisIvanRepo/your-repo.git
+cd goit-neo-react-extra-hw
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
+# or
+pnpm install
 ```
+
+### 3. Run the development server
+
+```bash
+npm run dev
+```
+
+---
+
+## 📦 Available Scripts
+
+| Command            | Description                     |
+|--------------------|---------------------------------|
+| `npm run dev`      | Start the development server    |
+| `npm run build`    | Build for production            |
+| `npm run preview`  | Preview the production build    |
+
+---
+
+## ⚙️ SPA Routing on Vercel
+
+The `vercel.json` file includes a rewrite rule to support client-side routing for SPA:
+
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
+```
+
+This prevents 404 errors when refreshing or directly accessing routes like `/login`.
+
+---
+
+## 📁 Project Structure
+
+- `src/` – Components, pages, Redux logic
+- `public/` – Static assets
+- `vercel.json` – SPA routing rules for deployment
+- `vite.config.ts` – Build configuration
+
+---
+
+## 👤 Author
+
+**Ivan Popovych** – Frontend developer in training, building his first production-ready applications with confidence 💪
