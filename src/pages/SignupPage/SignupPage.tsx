@@ -25,7 +25,7 @@ const initialState = {
 const validationSchema = yup.object({
   name: yup.string().required("Enter your name"),
   email: yup.string().email("Enter a valid email").required(),
-  password: yup.string().min(5).max(35).required(),
+  password: yup.string().min(7).max(35).required(),
 });
 
 export default function SignupPage() {
@@ -42,6 +42,7 @@ export default function SignupPage() {
           initialValues={initialState}
           validationSchema={validationSchema}
           onSubmit={(values, action) => {
+            console.log(values);
             action.resetForm();
 
             const { name, email, password } = values;
